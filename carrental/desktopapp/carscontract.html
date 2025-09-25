@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Invoice Template</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1in;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: white;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .document {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-height: 11in;
+            position: relative;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+            border: 1px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f8f8;
+            font-size: 10px;
+            color: #666;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .company-name {
+            font-weight: bold;
+            font-size: 14px;
+            color: #d97706;
+            letter-spacing: 1px;
+        }
+        
+        .business-info {
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.3;
+        }
+        
+        .green-bar {
+            height: 6px;
+            background: #ed8936;
+            margin: 0 20px;
+        }
+        
+        .invoice-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: #ed8936;
+            margin: 40px 0;
+            letter-spacing: 2px;
+        }
+        
+        .invoice-details {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 20px;
+        }
+        
+        .invoice-left {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        
+        .invoice-right {
+            text-align: right;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            background: #fff2cc;
+            padding: 1px 4px;
+            font-weight: bold;
+        }
+        
+        .items-table {
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: collapse;
+        }
+        
+        .items-table th {
+            background: #f8f8f8;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 12px;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .items-table th:last-child,
+        .items-table td:last-child {
+            text-align: right;
+        }
+        
+        .items-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 12px;
+        }
+        
+        .totals-section {
+            width: 200px;
+            margin-left: auto;
+            margin-top: 20px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 12px;
+        }
+        
+        .total-row.final {
+            font-weight: bold;
+            border-top: 2px solid #333;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .signature-section {
+            margin: 40px 20px 20px;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+        
+        .signature-box {
+            width: 200px;
+            height: 60px;
+            border: 2px solid #ed8936;
+            margin: 20px 0;
+            position: relative;
+            background: #fff7ed;
+        }
+        
+        .signature-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ed8936;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .date-line {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .footer-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: #ed8936;
+        }
+        
+        .download-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ed8936;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .download-button:hover {
+            background: #c56a1b;
+        }
+        
+        @media print {
+            body { margin: 0; padding: 0; }
+            .document { box-shadow: none; }
+            .download-button { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <button class="download-button" onclick="downloadContract()">📄 Download Contract</button>
+    
+    <div class="document">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo">INSERT YOUR LOGO HERE</div>
+                <div class="company-name">Renty</div>
+            </div>
+            <div class="business-info">
+                Registered Business<br>
+                Dubai Dubai headquartered<br>
+                79@Gmail.com<br>
+                +971543282839
+            </div>
+        </div>
+        
+        <div class="green-bar"></div>
+        
+        <div class="invoice-title">SALES INVOICE</div>
+        
+        <div class="green-bar"></div>
+        
+        <div class="invoice-details">
+            <div class="invoice-left">
+                Invoice No.: <span class="highlight">[Invoice No]</span><br>
+                Payment terms: <span class="highlight">[Invoice Terms]</span><br>
+                Due date: <span class="highlight">[Invoice due Date]</span>
+            </div>
+            <div class="invoice-right">
+                Bill to:<br>
+                <span class="highlight">[Client.FirstName]</span> <span class="highlight">[Client.LastName]</span><br>
+                <span class="highlight">[Client.StreetAddress]</span> <span class="highlight">[Client.City]</span> <span class="highlight">[Client.State]</span><br>
+                <span class="highlight">[Client.PostalCode]</span><br>
+                <span class="highlight">[Client.Phone]</span>
+            </div>
+        </div>
+        
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>QTY</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>$0.00</td>
+                    <td>1</td>
+                    <td>$0.00</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>$0.00</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="totals-section">
+            <div class="total-row">
+                <span>SUBTOTAL</span>
+                <span>$0.00</span>
+            </div>
+            <div class="total-row">
+                <span>DISCOUNT</span>
+                <span>$0.00</span>
+            </div>
+            <div class="total-row">
+                <span>TAX</span>
+                <span>$0.00</span>
+            </div>
+            <div class="total-row final">
+                <span>TOTAL</span>
+                <span>$0.00</span>
+            </div>
+        </div>
+        
+        <div class="signature-section">
+            I, the undersigned <span class="highlight">[Client.FirstName]</span> <span class="highlight">[Client.LastName]</span>,
+            do hereby acknowledge that I have received all financial
+            transaction and this document contains a fair, complete,
+            and accurate description of that transaction and the
+            relevant goods and/or services provided as well as a true
+            and realistic description of their value.
+            
+            <div class="signature-box">
+                <div class="signature-label">✓ Signature</div>
+            </div>
+            
+            <div class="date-line">
+                MM / DD / YYYY _______________
+            </div>
+        </div>
+        
+        <div class="footer-bar"></div>
+    </div>
+    
+    <script>
+        // Add print functionality
+        function printInvoice() {
+            window.print();
+        }
+        
+        // Download contract as Word document
+        function downloadContract() {
+            // Get the current date for filename
+            const now = new Date();
+            const dateStr = now.toISOString().split('T')[0];
+            
+            // Get the invoice number from the document (or use default)
+            const invoiceNoElement = document.querySelector('.highlight');
+            const invoiceNo = invoiceNoElement ? invoiceNoElement.textContent.replace(/[\[\]]/g, '') : 'Invoice';
+            
+            // Create filename
+            const filename = `${invoiceNo.replace(/[^a-zA-Z0-9]/g, '_')}_${dateStr}.doc`;
+            
+            // Get the document content without the download button
+            const documentClone = document.querySelector('.document').cloneNode(true);
+            
+            // Create Word-compatible HTML content
+            const wordContent = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+                      xmlns:w='urn:schemas-microsoft-com:office:word' 
+                      xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset="utf-8">
+                    <title>Sales Invoice</title>
+                    <!--[if gte mso 9]>
+                    <xml>
+                        <w:WordDocument>
+                            <w:View>Print</w:View>
+                            <w:Zoom>90</w:Zoom>
+                            <w:DoNotPromptForConvert/>
+                            <w:DoNotShowInsertionsAndDeletions/>
+                        </w:WordDocument>
+                    </xml>
+                    <![endif]-->
+                    <style>
+                        body {
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                            margin: 20px;
+                            background: white;
+                            color: #333;
+                            line-height: 1.4;
+                        }
+                        .document {
+                            max-width: 8.5in;
+                            margin: 0 auto;
+                            background: white;
+                        }
+                        .header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                            margin-bottom: 30px;
+                            padding: 20px;
+                        }
+                        .logo-section {
+                            display: flex;
+                            align-items: center;
+                        }
+                        .logo {
+                            width: 60px;
+                            height: 60px;
+                            margin-right: 15px;
+                            border: 1px dashed #ccc;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: #f8f8f8;
+                            font-size: 10px;
+                            color: #666;
+                            text-align: center;
+                        }
+                        .company-name {
+                            font-weight: bold;
+                            font-size: 14px;
+                            color: #d97706;
+                            letter-spacing: 1px;
+                        }
+                        .business-info {
+                            text-align: right;
+                            font-size: 12px;
+                            color: #666;
+                        }
+                        .green-bar {
+                            height: 6px;
+                            background: #ed8936;
+                            margin: 0 20px;
+                        }
+                        .invoice-title {
+                            text-align: center;
+                            font-size: 48px;
+                            font-weight: bold;
+                            color: #ed8936;
+                            margin: 40px 0;
+                            letter-spacing: 2px;
+                        }
+                        .invoice-details {
+                            display: flex;
+                            justify-content: space-between;
+                            margin: 30px 20px;
+                        }
+                        .invoice-left, .invoice-right {
+                            font-size: 12px;
+                            line-height: 1.6;
+                        }
+                        .invoice-right {
+                            text-align: right;
+                        }
+                        .highlight {
+                            background: #fff2cc;
+                            padding: 1px 4px;
+                            font-weight: bold;
+                        }
+                        table {
+                            width: 100%;
+                            margin: 30px 0;
+                            border-collapse: collapse;
+                        }
+                        th {
+                            background: #f8f8f8;
+                            padding: 10px;
+                            text-align: left;
+                            font-weight: bold;
+                            font-size: 12px;
+                            border-bottom: 2px solid #ddd;
+                        }
+                        th:last-child, td:last-child {
+                            text-align: right;
+                        }
+                        td {
+                            padding: 10px;
+                            border-bottom: 1px solid #eee;
+                            font-size: 12px;
+                        }
+                        .totals-section {
+                            width: 200px;
+                            margin-left: auto;
+                            margin-top: 20px;
+                        }
+                        .total-row {
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 5px 0;
+                            font-size: 12px;
+                        }
+                        .total-row.final {
+                            font-weight: bold;
+                            border-top: 2px solid #333;
+                            padding-top: 10px;
+                            margin-top: 10px;
+                        }
+                        .signature-section {
+                            margin: 40px 20px 20px;
+                            font-size: 11px;
+                            line-height: 1.5;
+                        }
+                        .signature-box {
+                            width: 200px;
+                            height: 60px;
+                            border: 2px solid #ed8936;
+                            margin: 20px 0;
+                            position: relative;
+                            background: #fff7ed;
+                        }
+                        .signature-label {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            color: #ed8936;
+                            font-weight: bold;
+                            font-size: 14px;
+                        }
+                        .date-line {
+                            margin-top: 20px;
+                            font-size: 12px;
+                            color: #666;
+                        }
+                        .footer-bar {
+                            height: 40px;
+                            background: #ed8936;
+                            margin-top: 40px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${documentClone.outerHTML}
+                </body>
+                </html>`;
+            
+            // Create blob with Word MIME type
+            const blob = new Blob([wordContent], { 
+                type: 'application/msword'
+            });
+            const url = URL.createObjectURL(blob);
+            
+            // Create temporary download link
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            
+            // Cleanup
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Show confirmation
+            alert(`Contract downloaded as Word document: ${filename}`);
+        }
+        
+        // Add keyboard shortcut for printing
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                printInvoice();
+            }
+            // Add keyboard shortcut for downloading (Ctrl+D)
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                downloadContract();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.log
+
+# Environments
+.env
+.env.*
+venv/
+.envrc
+
+# Django
+staticfiles/
+media/
+*.sqlite3
+/db.sqlite3
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Byte-compiled
+*$py.class
+
+# PyInstaller
+*.spec
+build/
+dist/
+
+# Coverage/Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Node (if any frontend is added later)
+node_modules/
+
+# Docker
+*.pid

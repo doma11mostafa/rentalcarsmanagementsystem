@@ -1,0 +1,33 @@
+# Docker ignore
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Git
+.git/
+.gitignore
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Python build
+build/
+dist/
+*.egg-info/
+
+# Node
+node_modules/
+
+# Local databases and media
+*.sqlite3
+/db.sqlite3
+media/
+
+# Static collected files (can be built in container)
+staticfiles/
