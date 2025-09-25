@@ -125,6 +125,4 @@ python manage.py collectstatic --noinput
 - Docker image uses `requirements-server.txt` to avoid bundling the desktop runtime (PyQt5) on the server.
 - Media and static volumes are mounted in `docker-compose.yml` for persistence and local inspection.
 
-## License
 
-Proprietary — internal use for the client project unless otherwise agreed.
